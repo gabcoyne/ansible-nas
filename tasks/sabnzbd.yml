@@ -1,0 +1,28 @@
+---
+- name: Create Sabnzbd Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ sabnzbd_data_directory }}"
+
+- name: Sabnzbd
+  docker_container:
+    name: sabnzbd
+    image: linuxserver/sabnzbd
+    pull: true
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ sabnzbd_tv_directory }}:/movies:rw"
+      - "{{ sabnzbd_movies_directory }}:/movies:rw"
+      - "{{ sabnzbd_download_directory }}/downloads:/downloads:rw"
+      - "{{ sabnzbd_data_directory }}:/config:rw"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "{{ samba_shares_root }}/dump:/incomplete-downloads"
+    ports:
+      - "8080:9090"
+    env:
+      PUID: "{{ sabnzbd_user_id }}"
+      PGID: "{{ sabnzbd_group_id }}"
+    restart_policy: unless-stopped
+    memory: 1g

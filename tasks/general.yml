@@ -1,4 +1,25 @@
 ---
+- name: Add partner repository
+  apt_repository: repo="{{item}}"
+  with_items:
+    - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+    - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+
+- name: Add restricted repository
+  apt_repository: repo="{{item}}"
+  with_items:
+    - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} restricted"
+    - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} restricted"
+
+
+- name: Add multiverse repository
+  apt_repository: repo="{{item}}"
+  with_items:
+    - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse"
+    - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}} multiverse"
+    - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse"
+    - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}}-updates multiverse"
+
 - name: Update apt-cache
   apt:
     update_cache: yes
