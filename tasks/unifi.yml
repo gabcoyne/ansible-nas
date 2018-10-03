@@ -1,26 +1,31 @@
 ---
-- name: Create Radarr Directories
+- name: Create Unifi Directories
   file:
     path: "{{ item }}"
     state: directory
   with_items:
-    - "{{ radarr_data_directory }}"
+    - "{{ unfi_data_directory }}"
 
-- name: Radarr
+- name: Unfi
   docker_container:
-    name: radarr
-    image: linuxserver/radarr
+    name: unfi
+    image: linuxserver/unfi
     pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "{{ radarr_movies_directory }}:/movies:rw"
-      - "{{ radarr_download_directory }}/downloads:/downloads:rw"
-      - "{{ radarr_data_directory }}:/config:rw"
+      - "{{ unfi_data_directory }}:/config:rw"
       - "/etc/timezone:/etc/timezone:ro"
     ports:
-      - "7878:7878"
+      - "3478:3478/udp" 
+      - "10001:10001/udp" 
+      - "8080:8080" 
+      - "8081:8081" 
+      - "8443:8443" 
+      - "8843:8843" 
+      - "8880:8880" 
+      - "6789:6789"   
     env:
-      PUID: "{{ radarr_user_id }}"
-      PGID: "{{ radarr_group_id }}"
+      PUID: "{{ unfi_user_id }}"
+      PGID: "{{ unfi_group_id }}"
     restart_policy: unless-stopped
     memory: 1g

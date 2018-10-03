@@ -20,7 +20,8 @@
       - "/etc/timezone:/etc/timezone:ro"
       - "{{ samba_shares_root }}/dump:/incomplete-downloads"
     ports:
-      - "8080:9090"
+      - "8080:8080"
+      - "9090:9090"
     env:
       PUID: "{{ sabnzbd_user_id }}"
       PGID: "{{ sabnzbd_group_id }}"
