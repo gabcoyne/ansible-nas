@@ -53,6 +53,19 @@
     when: stats_enabled == true
     tags: stats
   
-  roles:	
+  - import_tasks: tasks/sabnzbd.yml
+    when: sabnzbd_enabled == true
+    tags: sabnzbd
+
+  - import_tasks: tasks/unifi.yml
+    when: unifi_enabled == true
+    tags: unifi
+
+  - import_tasks: tasks/plex.yml
+    when: plex_enabled == true
+    tags: plex
+  
+  
+    roles:	
     - bertvv.samba	
     - geerlingguy.docker 

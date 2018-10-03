@@ -34,7 +34,6 @@
       com.docker.network.bridge.name: "{{ item.bridge_name}}"
     ipam_options:
       subnet: "{{ item.subnet}}"
-      gateway: 10.6.66.1
   with_items:
     - { name: docker_net_1, bridge_name: net1, subnet: 192.168.0.0/24 }
     - { name: docker_net_2, bridge_name: net2, subnet: 192.168.1.0/24 }
