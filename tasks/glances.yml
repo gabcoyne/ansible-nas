@@ -2,7 +2,7 @@
   docker_container:
     name: glances
     image: nicolargo/glances
-    pull: true
+    # pull: true
     ports:
       - "61208:61208"
       - "61209:61209"

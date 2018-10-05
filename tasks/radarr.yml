@@ -10,7 +10,7 @@
   docker_container:
     name: radarr
     image: linuxserver/radarr
-    pull: true
+    # pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ radarr_movies_directory }}:/movies:rw"

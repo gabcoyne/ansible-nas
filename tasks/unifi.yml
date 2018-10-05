@@ -6,7 +6,7 @@
   with_items:
     - "{{ unfi_data_directory }}"
 
-- name: Unfi
+- name: Unifi
   docker_container:
     name: unfi
     image: linuxserver/unfi

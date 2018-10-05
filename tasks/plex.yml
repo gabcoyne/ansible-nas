@@ -1,0 +1,40 @@
+---
+- name: Plex
+  lxd_container:
+    name: plex
+    state: started
+    source:
+      type: image
+      mode: pull
+      server: https://images.linuxcontainers.org
+      protocol: lxd
+      alias: ubuntu/xenial/amd64
+    profiles: ["default"]
+    wait_for_ipv4_addresses: true
+    timeout: 600
+
+- name: Add plex gpg key
+  delegate_to: plex
+  apt_key:
+    url: https://downloads.plex.tv/plex-keys/PlexSign.key
+    state: present
+
+
+- name: add plex repo
+  delegate_to: plex
+  apt_repository: 
+    repo: https://downloads.plex.tv/repo/deb public main
+    state: present
+
+
+# - name: check python is installed in container
+#   delegate_to: plex
+#   raw: dpkg -s python
+#   register: python_install_check
+#   failed_when: python_install_check.rc not in [0, 1]
+#   changed_when: false
+
+# - name: install python in container
+#   delegate_to: mycontainer
+#   raw: apt-get install -y python
+#   when: python_install_check.rc == 1

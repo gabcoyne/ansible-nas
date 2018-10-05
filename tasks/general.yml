@@ -1,24 +1,12 @@
 ---
-- name: Add partner repository
+
+- name: Add universe repository
   apt_repository: repo="{{item}}"
   with_items:
-    - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
-    - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
-
-- name: Add restricted repository
-  apt_repository: repo="{{item}}"
-  with_items:
-    - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} restricted"
-    - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} restricted"
-
-
-- name: Add multiverse repository
-  apt_repository: repo="{{item}}"
-  with_items:
-    - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse"
-    - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}} multiverse"
-    - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse"
-    - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}}-updates multiverse"
+    - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} universe"
+    - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}} universe"
+    - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates universe"
+    - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}}-updates universe"
 
 - name: Update apt-cache
   apt:
@@ -42,9 +30,41 @@
     - bonnie++
     - unzip
     - lm-sensors
+    - avahi-daemon
+    - avahi-utils
 
-#  - name: Configure smartmontools
+- name: Create avahi directories
+  file:
+    path: "/etc/avahi/services/smb.service"
+    state: touch
+
+- name: Insert/update avahi service
+  blockinfile:
+    path: /etc/avahi/services/smb.service
+    block: |
+      <?xml version="1.0" standalone='no'?>
+      <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+      <service-group>
+      <name replace-wildcards="yes">%h</name>
+      <service>
+        <type>_smb._tcp</type>
+        <port>445</port>
+      </service>
+      <service>
+        <type>_device-info._tcp</type>
+        <port>0</port>
+        <txt-record>model=RackMac</txt-record>
+      </service>
+      </service-group>
+
 
 - name: "Set hostname to {{ ansible_nas_hostname }}"
   hostname:
     name: "{{ ansible_nas_hostname }}"
+
+- name: add {{ansible_nas_hostname}} to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127\.0\.0\.1[ \t]+localhost'
+    line: "127.0.0.1 localhost {{ansible_nas_hostname}}"
+    state: present

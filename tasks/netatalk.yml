@@ -1,0 +1,17 @@
+---
+- name: Netatalk
+  docker_container:
+    name: netatalk
+    image: cptactionhank/netatalk
+    # pull: true
+    volumes:
+      - "{{ netatalk_share_root }}:/media/share"
+      - "{{ netatalk_share_root }}/timemachine:/media/timemachine"
+    ports:
+      - "548:548"
+    env:
+      PUID: "{{ netatalk_user_id }}"
+      PGID: "{{ netatalk_group_id }}"
+      AVAHI: 1
+    restart_policy: unless-stopped
+    memory: 1g

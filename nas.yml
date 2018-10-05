@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: node0
   tasks:
   - import_tasks: tasks/general.yml
 
@@ -64,8 +64,17 @@
   - import_tasks: tasks/plex.yml
     when: plex_enabled == true
     tags: plex
+
+  - import_tasks: tasks/pihole.yml
+    when: pihole_enabled == true
+    tags: pihole
+    
+  - import_tasks: tasks/netatalk.yml
+    when: netatalk_enabled == true
+    tags: netatalk
   
   
-    roles:	
-    - bertvv.samba	
-    - geerlingguy.docker 
+  roles:
+  # - bertvv.samba	
+  - geerlingguy.docker 
+  - juju4.lxd

@@ -3,4 +3,10 @@
   version: 2.1.0
 
 - name: bertvv.samba
-  version: v2.5.0
+  version: 2.5.0
+
+- name: debops.avahi
+  version: 2.2.0
+  
+- name: juju4.lxd
+  version: 2.5.0

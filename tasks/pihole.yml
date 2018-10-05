@@ -1,0 +1,28 @@
+
+- name: Create a started ubuntu container
+  lxd_container:
+    name: pihole
+    state: started
+    source:
+      type: image
+      mode: pull
+      server: https://images.linuxcontainers.org
+      protocol: lxd
+      alias: ubuntu/xenial/amd64
+    profiles: ["default"]
+    wait_for_ipv4_addresses: true
+    timeout: 600
+
+- name: Download pihole
+  delegate_to: pihole
+  git:
+    repo: 'https://github.com/pi-hole/pi-hole.git Pi-hole'
+    depth: 1
+    dest: Pi-hole
+    clone: yes
+    update: yes
+
+- name: install pihole in container
+  delegate_to: pihole
+  command: n
+  when: python_install_check.rc == 1
