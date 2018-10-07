@@ -2,6 +2,8 @@
 - hosts: node0
   tasks:
   - import_tasks: tasks/general.yml
+  
+  - import_tasks: tasks/docker_networks.yml
 
   - import_tasks: tasks/docker.yml
 
@@ -73,8 +75,10 @@
     when: netatalk_enabled == true
     tags: netatalk
   
+  - import_tasks: tasks/heimdall.yml
+    when: heimdall_enabled == true
+    tags: heimdall
   
   roles:
   # - bertvv.samba	
   - geerlingguy.docker 
-  - juju4.lxd

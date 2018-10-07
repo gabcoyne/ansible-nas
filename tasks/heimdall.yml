@@ -1,0 +1,25 @@
+---
+- name: Create heimdall Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ heimdall_data_directory }}"
+
+- name: Heimdall
+  docker_container:
+    name: heimdall
+    image: linuxserver/heimdall
+    pull: true
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ heimdall_data_directory }}:/config:rw"
+      - "/etc/timezone:/etc/timezone:ro"
+    ports:
+      - "80:80"
+      - "443:443"
+    env:
+      PUID: "{{ heimdall_user_id }}"
+      PGID: "{{ heimdall_group_id }}"
+    restart_policy: unless-stopped
+    memory: 1g

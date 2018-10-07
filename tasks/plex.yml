@@ -1,40 +1,31 @@
 ---
-- name: Plex
-  lxd_container:
+- name: Create Plex Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ plex_config_directory }}"
+
+- name: Create plex container
+  docker_container:
     name: plex
-    state: started
-    source:
-      type: image
-      mode: pull
-      server: https://images.linuxcontainers.org
-      protocol: lxd
-      alias: ubuntu/xenial/amd64
-    profiles: ["default"]
-    wait_for_ipv4_addresses: true
-    timeout: 600
-
-- name: Add plex gpg key
-  delegate_to: plex
-  apt_key:
-    url: https://downloads.plex.tv/plex-keys/PlexSign.key
-    state: present
-
-
-- name: add plex repo
-  delegate_to: plex
-  apt_repository: 
-    repo: https://downloads.plex.tv/repo/deb public main
-    state: present
-
-
-# - name: check python is installed in container
-#   delegate_to: plex
-#   raw: dpkg -s python
-#   register: python_install_check
-#   failed_when: python_install_check.rc not in [0, 1]
-#   changed_when: false
-
-# - name: install python in container
-#   delegate_to: mycontainer
-#   raw: apt-get install -y python
-#   when: python_install_check.rc == 1
+    image: linuxserver/plex
+    pull: true
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{plex_config_directory}}:/config" 
+      - "{{plex_transcode_directory}}:/transcode"
+      - "{{ plex_movies_directory }}:/movies:rw"
+      - "{{ plex_tv_directory }}:/tv_shows:rw"
+      - "{{ plex_config_directory }}:/config:rw"
+      - "/etc/timezone:/etc/timezone:ro"
+    hostname: plex
+    env:
+      PUID: "{{ plex_user_id }}"
+      PGID: "{{ plex_group_id }}"
+      # PLEX_CLAIM: CLAIMTOKEN
+    networks:
+      - name: macvlan0
+        ipv4_address: "10.6.66.101"
+    restart_policy: unless-stopped
+    memory: 1g

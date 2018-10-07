@@ -27,19 +27,6 @@
     dest: /etc/docker/daemon.json
   register: docker_config
 
-- name: Create docker networks
-  docker_network:
-    name: "{{ item.name }}"
-    driver_options: 
-      com.docker.network.bridge.name: "{{ item.bridge_name}}"
-    ipam_options:
-      subnet: "{{ item.subnet}}"
-  with_items:
-    - { name: docker_net_1, bridge_name: net1, subnet: 192.168.0.0/24 }
-    - { name: docker_net_2, bridge_name: net2, subnet: 192.168.1.0/24 }
-    - { name: docker_net_3, bridge_name: net3, subnet: 192.168.2.0/24 }
-
-
 - name: restart docker
   service:
      name: docker
