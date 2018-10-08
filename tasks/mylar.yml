@@ -1,0 +1,26 @@
+---
+- name: Create mylar Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ mylar_data_directory }}"
+
+- name: Mylar
+  docker_container:
+    name: mylar
+    image: linuxserver/mylar
+    # pull: true
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ mylar_comics_directory }}:/comics:rw"
+      - "{{ mylar_download_directory }}/downloads:/downloads:rw"
+      - "{{ mylar_data_directory }}:/config:rw"
+      - "/etc/timezone:/etc/timezone:ro"
+    ports:
+      - "8090:8090"
+    env:
+      PUID: "{{ mylar_user_id }}"
+      PGID: "{{ mylar_group_id }}"
+    restart_policy: unless-stopped
+    memory: 1g

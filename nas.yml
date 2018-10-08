@@ -79,6 +79,10 @@
     when: heimdall_enabled == true
     tags: heimdall
   
+  - import_tasks: tasks/mylar.yml
+    when: mylar_enabled == true
+    tags: mylar
+
   roles:
   # - bertvv.samba	
   - geerlingguy.docker 

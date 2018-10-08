@@ -4,28 +4,31 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - "{{ unfi_data_directory }}"
+    - "{{ unifi_data_directory }}"
 
 - name: Unifi
   docker_container:
-    name: unfi
-    image: linuxserver/unfi
+    name: unifi
+    image: linuxserver/unifi:unstable
     pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "{{ unfi_data_directory }}:/config:rw"
+      - "{{ unifi_data_directory }}:/config:rw"
       - "/etc/timezone:/etc/timezone:ro"
-    ports:
-      - "3478:3478/udp" 
-      - "10001:10001/udp" 
-      - "8080:8080" 
-      - "8081:8081" 
-      - "8443:8443" 
-      - "8843:8843" 
-      - "8880:8880" 
-      - "6789:6789"   
+    # ports:
+    #   - "3478:3478/udp" 
+    #   - "10001:10001/udp" 
+    #   - "8080:8080" 
+    #   - "8081:8081" 
+    #   - "8443:8443" 
+    #   - "8843:8843" 
+    #   - "8880:8880" 
+    #   - "6789:6789"   
     env:
-      PUID: "{{ unfi_user_id }}"
-      PGID: "{{ unfi_group_id }}"
+      PUID: "{{ unifi_user_id }}"
+      PGID: "{{ unifi_group_id }}"
+    networks:
+      - name: macvlan0
+        ipv4_address: "10.6.66.102"
     restart_policy: unless-stopped
-    memory: 1g
+    memory: 2g
