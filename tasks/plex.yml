@@ -26,6 +26,5 @@
       # PLEX_CLAIM: CLAIMTOKEN
     networks:
       - name: macvlan0
-        ipv4_address: "10.6.66.101"
+        ipv4_address: "10.6.66.151"
     restart_policy: unless-stopped
-    memory: 1g

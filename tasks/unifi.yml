@@ -9,7 +9,7 @@
 - name: Unifi
   docker_container:
     name: unifi
-    image: linuxserver/unifi:unstab
+    image: linuxserver/unifi:unstable
     pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -29,6 +29,5 @@
       PGID: "{{ unifi_group_id }}"
     networks:
       - name: macvlan0
-        ipv4_address: "10.6.66.102"
+        ipv4_address: "10.6.66.152"
     restart_policy: unless-stopped
-    memory: 2g

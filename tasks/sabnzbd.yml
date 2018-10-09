@@ -15,7 +15,7 @@
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ sabnzbd_tv_directory }}:/tv_shows:rw"
       - "{{ sabnzbd_movies_directory }}:/movies:rw"
-      - "{{ sabnzbd_download_directory }}/downloads:/downloads:rw"
+      - "{{ sabnzbd_download_directory }}:/downloads:rw"
       - "{{ sabnzbd_data_directory }}:/config:rw"
       - "/etc/timezone:/etc/timezone:ro"
       - "{{ samba_shares_root }}/dump:/incomplete-downloads"

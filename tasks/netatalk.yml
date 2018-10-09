@@ -10,8 +10,8 @@
     ports:
       - "548:548"
     env:
-      PUID: "{{ netatalk_user_id }}"
-      PGID: "{{ netatalk_group_id }}"
+      # PUID: "{{ netatalk_user_id }}"
+      # PGID: "{{ netatalk_group_id }}"
       AVAHI: 1
     restart_policy: unless-stopped
     memory: 1g

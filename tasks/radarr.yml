@@ -10,11 +10,11 @@
   docker_container:
     name: radarr
     image: linuxserver/radarr
-    # pull: true
+    pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ radarr_movies_directory }}:/movies:rw"
-      - "{{ radarr_download_directory }}/downloads:/downloads:rw"
+      - "{{ radarr_download_directory }}:/downloads:rw"
       - "{{ radarr_data_directory }}:/config:rw"
       - "/etc/timezone:/etc/timezone:ro"
     ports:
