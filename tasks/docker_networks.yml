@@ -21,7 +21,7 @@
       gateway: '{{ item.gateway }}'
       iprange: '{{ item.iprange }}'
   with_items:
-  - { name: 'macvlan0', parent: 'ens6f1', subnet: '10.6.66.0/24', gateway: '', iprange: '10.6.66.100/30' }
+  - { name: 'macvlan0', parent: 'ens6f1', subnet: '10.6.66.0/24', gateway: '', iprange: '10.6.66.140/30' }
   tags:
   - docker
   - docker-network

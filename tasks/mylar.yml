@@ -10,7 +10,9 @@
   docker_container:
     name: mylar
     image: linuxserver/mylar
-    # pull: true
+    pull: true
+    links:
+      - "transmission:torrent"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ mylar_comics_directory }}:/comics:rw"

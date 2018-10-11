@@ -11,6 +11,11 @@
     name: heimdall
     image: linuxserver/heimdall
     pull: true
+    links:
+      - "sabnzbd:sab"
+      - "unifi:unifi"
+      - "transmission:transmission"
+      - "mylar:mylar"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ heimdall_data_directory }}:/config:rw"
@@ -22,4 +27,3 @@
       PUID: "{{ heimdall_user_id }}"
       PGID: "{{ heimdall_group_id }}"
     restart_policy: unless-stopped
-    memory: 1g
