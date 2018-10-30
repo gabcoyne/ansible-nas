@@ -84,5 +84,5 @@
     tags: mylar
 
   roles:
-  # - bertvv.samba	
+  - { role: bertvv.samba, tags: [samba]}
   - geerlingguy.docker 

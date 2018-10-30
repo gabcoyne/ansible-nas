@@ -23,7 +23,7 @@
     env:
       PUID: "{{ plex_user_id }}"
       PGID: "{{ plex_group_id }}"
-      ALLOWED_NETWORKS: "10.6.66.0/24"
+      # ALLOWED_NETWORKS: "10.6.66.0/24"
     networks:
       - name: macvlan0
         ipv4_address: "10.6.66.151"
