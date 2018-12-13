@@ -23,4 +23,3 @@
       PUID: "{{ sonarr_user_id }}"
       PGID: "{{ sonarr_group_id }}"
     restart_policy: unless-stopped
-    memory: 1g

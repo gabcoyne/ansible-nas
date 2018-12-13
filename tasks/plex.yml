@@ -9,7 +9,7 @@
 - name: Create plex container
   docker_container:
     name: plex
-    image: linuxserver/plex
+    image: plexinc/pms-docker
     pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
@@ -23,8 +23,9 @@
     env:
       PUID: "{{ plex_user_id }}"
       PGID: "{{ plex_group_id }}"
-      # ALLOWED_NETWORKS: "10.6.66.0/24"
-    networks:
-      - name: macvlan0
-        ipv4_address: "10.6.66.151"
+    network_mode: host
+
+    # networks:
+    #   - name: macvlan0
+    #     ipv4_address: "10.6.66.151"
     restart_policy: unless-stopped

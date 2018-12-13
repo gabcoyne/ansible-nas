@@ -15,6 +15,10 @@
     when: transmission_enabled == true
     tags: transmission
 
+  - import_tasks: tasks/deluge.yml
+    when: deluge_enabled == true
+    tags: deluge
+
   - import_tasks: tasks/transmission_with_openvpn.yml
     when: transmission_with_openvpn_enabled == true
     tags: transmission
