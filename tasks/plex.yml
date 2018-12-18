@@ -1,31 +1,24 @@
----
 - name: Create Plex Directories
   file:
     path: "{{ item }}"
     state: directory
+    # mode: 0755
   with_items:
     - "{{ plex_config_directory }}"
 
-- name: Create plex container
+- name: plex Docker Container
   docker_container:
     name: plex
-    image: plexinc/pms-docker
+    image: linuxserver/plex
     pull: true
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "{{plex_config_directory}}:/config" 
-      - "{{plex_transcode_directory}}:/transcode"
-      - "{{ plex_movies_directory }}:/movies:rw"
-      - "{{ plex_tv_directory }}:/tv_shows:rw"
       - "{{ plex_config_directory }}:/config:rw"
-      - "/etc/timezone:/etc/timezone:ro"
-    hostname: plex
+      - "{{ plex_movies_directory }}:/movies:rw"
+      - "{{ plex_tv_directory }}:/tv:rw"
+    network_mode: "host"
     env:
+      TZ: "America/Detroit"
       PUID: "{{ plex_user_id }}"
       PGID: "{{ plex_group_id }}"
-    network_mode: host
-
-    # networks:
-    #   - name: macvlan0
-    #     ipv4_address: "10.6.66.151"
     restart_policy: unless-stopped
+    memory: 1g

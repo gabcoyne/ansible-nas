@@ -1,5 +1,2 @@
 [nodes]
-node0 ansible_host=10.6.66.140 ansible_user=gcoyne ansible_python_interpreter=/usr/bin/python3
-
-[containers]
-plex ansible_connection=lxd
+node1 ansible_host=10.6.66.53 ansible_user=gordon ansible_python_interpreter=/usr/bin/python3
