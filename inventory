@@ -1,2 +1,2 @@
 [nodes]
-node1 ansible_host=10.6.66.53 ansible_user=gordon ansible_python_interpreter=/usr/bin/python3
+node1 ansible_host=10.6.66.53 ansible_user=marcin ansible_python_interpreter=/usr/bin/python3
