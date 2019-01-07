@@ -1,8 +1,7 @@
 # Ansible NAS
 
-After getting burned by broken FreeNAS updates one too many times, I figured I could do a much better job myself using 
-just a stock Ubuntu install, some clever Ansible config and a bunch of docker containers.
 
+forked from davestephens/ansible-nas
 
 ## What This Sets Up
 
@@ -12,7 +11,6 @@ just a stock Ubuntu install, some clever Ansible config and a bunch of docker co
 * A Docker host with Portainer for image and container management
 * Various ways to see stats about your NAS - Glances, dashboards in Grafana
 * A backup tool - allows scheduled backups to Amazon S3, OneDrive, Dropbox etc
-* An IRC bouncer
 
 
 ### Docker Containers Used
@@ -36,7 +34,6 @@ just a stock Ubuntu install, some clever Ansible config and a bunch of docker co
 
 Ansible-NAS can run anything that's in a Docker image, which is why Portainer is included. A NAS configuration is a pretty personal thing based on what you download, what media you view, how many photos you take...so it's difficult to please everyone.
 
-That said, if specific functionality you want isn't included and you think others could benefit, add it and raise a PR!
 
 
 ## What This Doesn't Do
@@ -45,12 +42,11 @@ Ansible NAS doesn't set up your disk partitions, primarily because getting it wr
 That aside, configuring partitions is usually a one-time (or very infrequent) event, so there's not much to be 
 gained by automating it.  
 
+I recommend setting up ZFS
 
 ## Hardware
 
 Ansible NAS should work on any recent Ubuntu box. Development is done on Ubuntu Server 18.04.1 LTS.
-
-**TODO:** Test against a Raspberry Pi!
 
 
 ## How To Use
