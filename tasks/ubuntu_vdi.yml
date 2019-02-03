@@ -22,3 +22,4 @@
       PUID: "{{ ubuntu_vdi_user_id }}"
       PGID: "{{ ubuntu_vdi_group_id }}"
     restart_policy: unless-stopped
+    command: ["sudo apt update -y", ]
