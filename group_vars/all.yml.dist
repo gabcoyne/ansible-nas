@@ -28,6 +28,8 @@ nextcloud_enabled: false
 znc_enabled: false
 
 
+#VDI
+ubuntu_vdi_enabled: true
 
 ###
 ### General
@@ -201,7 +203,7 @@ znc_group_id: 0
 
 
 ###
-### Stats 
+### Stats
 ###
 telegraf_data_directory: "{{ docker_home }}/telegraf"
 influxdb_data_directory: "{{ docker_home }}/influxdb"
@@ -212,3 +214,11 @@ stat_collection_interval: 15s
 ### Nextcloud
 ###
 nextcloud_data_directory: "{{ docker_home }}/nextcloud"
+
+###
+### Ubuntu VDI
+###
+samba_share: "{{ samba_shares_root }}"
+ubuntu_vdi_data_directory: "{{ docker_home }}/ubuntu_vdi"
+ubuntu_vdi_user_id: 0
+ubuntu_vdi: 0

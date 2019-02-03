@@ -2,7 +2,7 @@
 - hosts: node0
   tasks:
   - import_tasks: tasks/general.yml
-  
+
   - import_tasks: tasks/docker_networks.yml
 
   - import_tasks: tasks/docker.yml
@@ -58,7 +58,7 @@
   - import_tasks: tasks/stats.yml
     when: stats_enabled == true
     tags: stats
-  
+
   - import_tasks: tasks/sabnzbd.yml
     when: sabnzbd_enabled == true
     tags: sabnzbd
@@ -74,19 +74,23 @@
   - import_tasks: tasks/pihole.yml
     when: pihole_enabled == true
     tags: pihole
-    
+
   - import_tasks: tasks/netatalk.yml
     when: netatalk_enabled == true
     tags: netatalk
-  
+
   - import_tasks: tasks/heimdall.yml
     when: heimdall_enabled == true
     tags: heimdall
-  
+
   - import_tasks: tasks/mylar.yml
     when: mylar_enabled == true
     tags: mylar
 
+  - import_tasks: tasks/ubuntu_vdi.yml
+    when: ubuntu_vdi_enabled == true
+    tags: vdi
+    
   roles:
   - { role: bertvv.samba, tags: [samba]}
-  - geerlingguy.docker 
+  - geerlingguy.docker

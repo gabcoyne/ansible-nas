@@ -1,0 +1,24 @@
+---
+- name: Create ubuntu_vdi Directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    # mode: 0755
+  with_items:
+    - "{{ samba_share }}"
+
+- name: Ubuntu VDI Docker Container
+  docker_container:
+    name: ubuntu_vdi
+    image: dorowu/ubuntu-desktop-lxde-vnc
+    pull: true
+    volumes:
+      - "{{ samba_share }}:/mnt/share:rw"
+      - "/etc/timezone:/etc/timezone:ro"
+    ports:
+      - "6080:80"
+      - "5900:5900"
+    env:
+      PUID: "{{ ubuntu_vdi_user_id }}"
+      PGID: "{{ ubuntu_vdi_group_id }}"
+    restart_policy: unless-stopped
