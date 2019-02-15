@@ -9,7 +9,7 @@
 - name: Unifi
   docker_container:
     name: unifi
-    image: linuxserver/unifi:unstable
+    image: jacobalberty/unifi:latest
     pull: true
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
